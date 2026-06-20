@@ -174,17 +174,25 @@
       height: 100% !important;
     }
 .work-embed iframe,
-.work-embed video {
-  display: block;
-  width: 100%;
-  border: none;
-}
+    .work-embed video {
+      display: block;
+      width: 100%;
+      border: none;
+    }
 
-.work-embed:has(.instagram-media) {
-  aspect-ratio: auto !important;
-  height: auto !important;
-  max-width: 320px;
-}
+    .work-embed:has(.instagram-media) {
+      aspect-ratio: auto !important;
+      height: auto !important;
+      width: 280px !important;
+      max-width: 280px !important;
+    }
+
+    .work-embed:has(.instagram-media) .instagram-media {
+      width: 280px !important;
+    }
+
+    .work-item:has(.instagram-media) {
+      width: 280px;
     }
 
     .work-embed img {
