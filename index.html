@@ -3,9 +3,9 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Tymoteusz Ślęczka — Content Creator</title>
+  <title>Tymoteusz Ślęczka — Portfolio</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
@@ -44,7 +44,7 @@
     }
 
     .nav-name {
-      font-weight: 500;
+      font-weight: 700;
       font-size: 0.95rem;
       letter-spacing: 0.02em;
       color: var(--ink);
@@ -73,56 +73,33 @@
       min-height: 100svh;
       display: flex;
       flex-direction: column;
-      justify-content: flex-end;
-      padding: 0 clamp(1.5rem, 5vw, 4rem) clamp(3rem, 6vw, 5rem);
-      padding-top: 5rem;
+      justify-content: center;
+      padding: 5rem clamp(1.5rem, 5vw, 4rem) clamp(3rem, 6vw, 5rem);
       border-bottom: 1px solid var(--rule);
     }
 
     .hero-eyebrow {
-      font-size: 0.75rem;
-      letter-spacing: 0.12em;
-      text-transform: uppercase;
+      font-size: 0.85rem;
+      letter-spacing: 0.06em;
       color: var(--muted);
-      margin-bottom: 1.5rem;
+      margin-bottom: 1.25rem;
     }
 
     .hero-title {
-      font-family: 'Inter', sans-serif;
       font-weight: 300;
-      font-size: clamp(2.8rem, 8vw, 7rem);
-      line-height: 1.05;
+      font-size: clamp(3.5rem, 11vw, 9rem);
+      line-height: 1;
       letter-spacing: -0.03em;
       color: var(--ink);
-      max-width: 18ch;
-    }
-
-    .hero-title span {
-      color: var(--muted);
-    }
-
-    .hero-meta {
-      margin-top: clamp(2rem, 4vw, 3.5rem);
-      display: flex;
-      align-items: flex-end;
-      justify-content: space-between;
-      gap: 2rem;
-      flex-wrap: wrap;
     }
 
     .hero-desc {
-      font-size: 0.95rem;
+      margin-top: 1.5rem;
+      font-size: 1rem;
       color: var(--muted);
-      max-width: 40ch;
+      max-width: 44ch;
       line-height: 1.7;
       font-weight: 300;
-    }
-
-    .hero-scroll {
-      font-size: 0.7rem;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-      color: var(--muted);
     }
 
     /* SECTIONS */
@@ -140,11 +117,24 @@
       display: block;
     }
 
-    /* WORK GRID */
-    .work-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: clamp(2rem, 4vw, 4rem);
+    .subsection {
+      margin-bottom: clamp(3rem, 6vw, 5rem);
+    }
+
+    .subsection:last-child { margin-bottom: 0; }
+
+    .subsection-title {
+      font-size: 1.1rem;
+      font-weight: 500;
+      color: var(--ink);
+      margin-bottom: 1.5rem;
+    }
+
+    /* WORK GRID — flexible row layout */
+    .work-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: clamp(1.25rem, 2.5vw, 2rem);
     }
 
     .work-item {
@@ -153,15 +143,25 @@
       gap: 0.75rem;
     }
 
-    .work-item.full {
-      grid-column: 1 / -1;
-    }
+    /* width helpers */
+    .w-portrait-sm { width: clamp(180px, 22vw, 260px); }
+    .w-portrait { width: clamp(220px, 28vw, 320px); }
+    .w-wide { width: 100%; }
+    .w-flex { flex: 1 1 260px; }
+    .w-a6 { width: clamp(160px, 20vw, 220px); }
 
     .work-embed {
       background: var(--off);
       overflow: hidden;
       position: relative;
+      width: 100%;
     }
+
+    /* aspect ratios */
+    .ar-45 { aspect-ratio: 4/5; }
+    .ar-169 { aspect-ratio: 16/9; }
+    .ar-916 { aspect-ratio: 9/16; }
+    .ar-a6 { aspect-ratio: 105/148; }
 
     /* IG embeds - override Instagram's inline styles */
     .work-embed .instagram-media {
@@ -171,26 +171,31 @@
       width: 100% !important;
       border-radius: 0 !important;
       box-shadow: none !important;
+      height: 100% !important;
     }
 
-    /* FB video embeds */
-    .work-embed iframe {
+    .work-embed iframe,
+    .work-embed video {
       display: block;
       width: 100%;
-      aspect-ratio: 16/9;
+      height: 100%;
       border: none;
+      position: absolute;
+      inset: 0;
     }
 
-    /* Direct images */
     .work-embed img {
       display: block;
       width: 100%;
-      height: auto;
+      height: 100%;
+      object-fit: cover;
+      position: absolute;
+      inset: 0;
     }
 
-    /* Placeholder state for items not yet filled */
     .work-embed-placeholder {
-      aspect-ratio: 1/1;
+      position: absolute;
+      inset: 0;
       display: flex;
       flex-direction: column;
       align-items: center;
@@ -200,41 +205,42 @@
       background: var(--off);
     }
 
-    .work-embed-placeholder.wide { aspect-ratio: 16/9; }
-
     .work-embed-placeholder span:first-child {
       font-size: 1.5rem;
       opacity: 0.3;
     }
 
     .work-embed-placeholder span:last-child {
-      font-size: 0.7rem;
-      letter-spacing: 0.1em;
+      font-size: 0.68rem;
+      letter-spacing: 0.08em;
       text-transform: uppercase;
       opacity: 0.4;
+      text-align: center;
+      padding: 0 0.5rem;
     }
 
     .work-label {
-      font-size: 0.8rem;
+      font-size: 0.82rem;
       color: var(--muted);
       font-weight: 400;
-      letter-spacing: 0.02em;
     }
 
     /* ABOUT */
     .about-grid {
       display: grid;
-      grid-template-columns: 1fr 1fr;
+      grid-template-columns: 1.1fr 0.9fr;
       gap: clamp(3rem, 6vw, 6rem);
       align-items: start;
     }
 
     .about-text {
-      font-size: clamp(1.1rem, 2vw, 1.4rem);
-      line-height: 1.6;
+      font-size: clamp(1rem, 1.6vw, 1.15rem);
+      line-height: 1.8;
       color: var(--ink);
       font-weight: 300;
     }
+
+    .about-text + .about-text { margin-top: 1.25rem; }
 
     .about-details {
       display: flex;
@@ -252,7 +258,7 @@
       letter-spacing: 0.12em;
       text-transform: uppercase;
       color: var(--muted);
-      margin-bottom: 0.3rem;
+      margin-bottom: 0.5rem;
     }
 
     .about-row-value {
@@ -261,35 +267,35 @@
       line-height: 1.5;
     }
 
-    .skills-list {
+    .tag-list {
       display: flex;
       flex-wrap: wrap;
       gap: 0.4rem;
-      margin-top: 0.3rem;
     }
 
     .skill-tag {
       font-size: 0.72rem;
-      padding: 0.25rem 0.6rem;
+      padding: 0.3rem 0.65rem;
       border: 1px solid var(--rule);
-      color: var(--muted);
+      color: var(--ink);
     }
 
     /* CONTACT */
     .contact-section {
-      padding: var(--gap) clamp(1.5rem, 5vw, 4rem);
+      padding: clamp(4rem, 9vw, 7rem) clamp(1.5rem, 5vw, 4rem);
+    }
+
+    .contact-title {
+      font-weight: 300;
+      font-size: clamp(2rem, 5vw, 3.5rem);
+      letter-spacing: -0.02em;
+      margin-bottom: clamp(2rem, 4vw, 3rem);
     }
 
     .contact-grid {
       display: flex;
-      gap: 3rem;
-      margin-top: 1.5rem;
-    }
-
-    .contact-item {
-      display: flex;
-      flex-direction: column;
-      gap: 0.25rem;
+      gap: clamp(2.5rem, 6vw, 5rem);
+      flex-wrap: wrap;
     }
 
     .contact-item-label {
@@ -297,22 +303,23 @@
       letter-spacing: 0.12em;
       text-transform: uppercase;
       color: var(--muted);
+      margin-bottom: 0.5rem;
+      display: block;
     }
 
     .contact-item-value {
-      font-size: 0.95rem;
+      font-size: clamp(1.4rem, 3vw, 2rem);
+      font-weight: 400;
       color: var(--ink);
       text-decoration: none;
+      letter-spacing: -0.01em;
     }
 
-    .contact-item-value:hover {
-      color: var(--muted);
-    }
+    .contact-item-value:hover { color: var(--muted); }
 
     /* FOOTER */
     footer {
       padding: 1.5rem clamp(1.5rem, 5vw, 4rem);
-      border-top: 1px solid var(--rule);
       display: flex;
       justify-content: space-between;
       align-items: center;
@@ -335,13 +342,12 @@
 
     /* RESPONSIVE */
     @media (max-width: 768px) {
-      .work-grid { grid-template-columns: 1fr; }
       .about-grid { grid-template-columns: 1fr; }
-      .contact-grid { flex-direction: column; gap: 1.5rem; }
-      .nav-links { display: none; }
+      .contact-grid { flex-direction: column; gap: 2rem; }
+      .nav-links { gap: 1.25rem; }
+      .w-portrait-sm, .w-portrait, .w-a6 { width: 100%; max-width: 320px; }
     }
 
-    /* SCROLL REVEAL */
     @media (prefers-reduced-motion: no-preference) {
       .work-item {
         opacity: 0;
@@ -357,6 +363,7 @@
 </head>
 <body>
 
+  <!-- NAV -->
   <nav>
     <a href="#" class="nav-name">Tymoteusz Ślęczka</a>
     <ul class="nav-links">
@@ -366,172 +373,289 @@
     </ul>
   </nav>
 
+  <!-- HERO -->
   <header class="hero">
-    <p class="hero-eyebrow">Content Creator · Social Media · Sport</p>
-    <h1 class="hero-title">Visual stories for <span>sport.</span></h1>
-    <div class="hero-meta">
-      <p class="hero-desc">Grafiki, rolki, reportaże zdjęciowe i kampanie dla klubów piłkarskich. Tworzę treści, które angażują kibiców i budują markę klubu.</p>
-      <span class="hero-scroll">Scroll ↓</span>
-    </div>
+    <p class="hero-eyebrow">Kreowanie treści | Fotografia | Filmowanie | Event</p>
+    <h1 class="hero-title">Portfolio</h1>
+    <p class="hero-desc">Moje zdjęcia, grafiki, filmy i materiały tworzone na potrzeby komunikacji klubu sportowego.</p>
   </header>
 
 
+  <!-- WORK -->
   <section id="work">
     <span class="section-label">Wybrane prace</span>
 
-    <div class="work-grid">
+    <!-- FOTOGRAFIE SPORTOWE -->
+    <div class="subsection">
+      <h3 class="subsection-title">Fotografie sportowe</h3>
+      <div class="work-row">
 
-      <!-- === POZYCJA 1: Karuzela IG === -->
-      <div class="work-item">
-        <div class="work-embed">
-          <!-- WKLEJ EMBED Z INSTAGRAMA PONIŻEJ -->
- <blockquote class="instagram-media" data-instgrm-permalink="https://www.instagram.com/p/DTx6EbHkcLH/?utm_source=ig_embed&amp;utm_campaign=loading" data-instgrm-version="14" style=" background:#FFF; border:0; border-radius:3px; box-shadow:0 0 1px 0 rgba(0,0,0,0.5),0 1px 10px 0 rgba(0,0,0,0.15); margin: 1px; max-width:540px; min-width:326px; padding:0; width:99.375%; width:-webkit-calc(100% - 2px); width:calc(100% - 2px);"><div style="padding:16px;"> <a href="https://www.instagram.com/p/DTx6EbHkcLH/?utm_source=ig_embed&amp;utm_campaign=loading" style=" background:#FFFFFF; line-height:0; padding:0 0; text-align:center; text-decoration:none; width:100%;" target="_blank"> <div style=" display: flex; flex-direction: row; align-items: center;"> <div style="background-color: #F4F4F4; border-radius: 50%; flex-grow: 0; height: 40px; margin-right: 14px; width: 40px;"></div> <div style="display: flex; flex-direction: column; flex-grow: 1; justify-content: center;"> <div style=" background-color: #F4F4F4; border-radius: 4px; flex-grow: 0; height: 14px; margin-bottom: 6px; width: 100px;"></div> <div style=" background-color: #F4F4F4; border-radius: 4px; flex-grow: 0; height: 14px; width: 60px;"></div></div></div><div style="padding: 19% 0;"></div> <div style="display:block; height:50px; margin:0 auto 12px; width:50px;"><svg width="50px" height="50px" viewBox="0 0 60 60" version="1.1" xmlns="https://www.w3.org/2000/svg" xmlns:xlink="https://www.w3.org/1999/xlink"><g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd"><g transform="translate(-511.000000, -20.000000)" fill="#000000"><g><path d="M556.869,30.41 C554.814,30.41 553.148,32.076 553.148,34.131 C553.148,36.186 554.814,37.852 556.869,37.852 C558.924,37.852 560.59,36.186 560.59,34.131 C560.59,32.076 558.924,30.41 556.869,30.41 M541,60.657 C535.114,60.657 530.342,55.887 530.342,50 C530.342,44.114 535.114,39.342 541,39.342 C546.887,39.342 551.658,44.114 551.658,50 C551.658,55.887 546.887,60.657 541,60.657 M541,33.886 C532.1,33.886 524.886,41.1 524.886,50 C524.886,58.899 532.1,66.113 541,66.113 C549.9,66.113 557.115,58.899 557.115,50 C557.115,41.1 549.9,33.886 541,33.886 M565.378,62.101 C565.244,65.022 564.756,66.606 564.346,67.663 C563.803,69.06 563.154,70.057 562.106,71.106 C561.058,72.155 560.06,72.803 558.662,73.347 C557.607,73.757 556.021,74.244 553.102,74.378 C549.944,74.521 548.997,74.552 541,74.552 C533.003,74.552 532.056,74.521 528.898,74.378 C525.979,74.244 524.393,73.757 523.338,73.347 C521.94,72.803 520.942,72.155 519.894,71.106 C518.846,70.057 518.197,69.06 517.654,67.663 C517.244,66.606 516.755,65.022 516.623,62.101 C516.479,58.943 516.448,57.996 516.448,50 C516.448,42.003 516.479,41.056 516.623,37.899 C516.755,34.978 517.244,33.391 517.654,32.338 C518.197,30.938 518.846,29.942 519.894,28.894 C520.942,27.846 521.94,27.196 523.338,26.654 C524.393,26.244 525.979,25.756 528.898,25.623 C532.057,25.479 533.004,25.448 541,25.448 C548.997,25.448 549.943,25.479 553.102,25.623 C556.021,25.756 557.607,26.244 558.662,26.654 C560.06,27.196 561.058,27.846 562.106,28.894 C563.154,29.942 563.803,30.938 564.346,32.338 C564.756,33.391 565.244,34.978 565.378,37.899 C565.522,41.056 565.552,42.003 565.552,50 C565.552,57.996 565.522,58.943 565.378,62.101 M570.82,37.631 C570.674,34.438 570.167,32.258 569.425,30.349 C568.659,28.377 567.633,26.702 565.965,25.035 C564.297,23.368 562.623,22.342 560.652,21.575 C558.743,20.834 556.562,20.326 553.369,20.18 C550.169,20.033 549.148,20 541,20 C532.853,20 531.831,20.033 528.631,20.18 C525.438,20.326 523.257,20.834 521.349,21.575 C519.376,22.342 517.703,23.368 516.035,25.035 C514.368,26.702 513.342,28.377 512.574,30.349 C511.834,32.258 511.326,34.438 511.181,37.631 C511.035,40.831 511,41.851 511,50 C511,58.147 511.035,59.17 511.181,62.369 C511.326,65.562 511.834,67.743 512.574,69.651 C513.342,71.625 514.368,73.296 516.035,74.965 C517.703,76.634 519.376,77.658 521.349,78.425 C523.257,79.167 525.438,79.673 528.631,79.82 C531.831,79.965 532.853,80.001 541,80.001 C549.148,80.001 550.169,79.965 553.369,79.82 C556.562,79.673 558.743,79.167 560.652,78.425 C562.623,77.658 564.297,76.634 565.965,74.965 C567.633,73.296 568.659,71.625 569.425,69.651 C570.167,67.743 570.674,65.562 570.82,62.369 C570.966,59.17 571,58.147 571,50 C571,41.851 570.966,40.831 570.82,37.631"></path></g></g></g></svg></div><div style="padding-top: 8px;"> <div style=" color:#3897f0; font-family:Arial,sans-serif; font-size:14px; font-style:normal; font-weight:550; line-height:18px;">Wyświetl ten post na Instagramie</div></div><div style="padding: 12.5% 0;"></div> <div style="display: flex; flex-direction: row; margin-bottom: 14px; align-items: center;"><div> <div style="background-color: #F4F4F4; border-radius: 50%; height: 12.5px; width: 12.5px; transform: translateX(0px) translateY(7px);"></div> <div style="background-color: #F4F4F4; height: 12.5px; transform: rotate(-45deg) translateX(3px) translateY(1px); width: 12.5px; flex-grow: 0; margin-right: 14px; margin-left: 2px;"></div> <div style="background-color: #F4F4F4; border-radius: 50%; height: 12.5px; width: 12.5px; transform: translateX(9px) translateY(-18px);"></div></div><div style="margin-left: 8px;"> <div style=" background-color: #F4F4F4; border-radius: 50%; flex-grow: 0; height: 20px; width: 20px;"></div> <div style=" width: 0; height: 0; border-top: 2px solid transparent; border-left: 6px solid #f4f4f4; border-bottom: 2px solid transparent; transform: translateX(16px) translateY(-4px) rotate(30deg)"></div></div><div style="margin-left: auto;"> <div style=" width: 0px; border-top: 8px solid #F4F4F4; border-right: 8px solid transparent; transform: translateY(16px);"></div> <div style=" background-color: #F4F4F4; flex-grow: 0; height: 12px; width: 16px; transform: translateY(-4px);"></div> <div style=" width: 0; height: 0; border-top: 8px solid #F4F4F4; border-left: 8px solid transparent; transform: translateY(-4px) translateX(8px);"></div></div></div> <div style="display: flex; flex-direction: column; flex-grow: 1; justify-content: center; margin-bottom: 24px;"> <div style=" background-color: #F4F4F4; border-radius: 4px; flex-grow: 0; height: 14px; margin-bottom: 6px; width: 224px;"></div> <div style=" background-color: #F4F4F4; border-radius: 4px; flex-grow: 0; height: 14px; width: 144px;"></div></div></a><p style=" color:#c9c8cd; font-family:Arial,sans-serif; font-size:14px; line-height:17px; margin-bottom:0; margin-top:8px; overflow:hidden; padding:8px 0 7px; text-align:center; text-overflow:ellipsis; white-space:nowrap;"><a href="https://www.instagram.com/p/DTx6EbHkcLH/?utm_source=ig_embed&amp;utm_campaign=loading" style=" color:#c9c8cd; font-family:Arial,sans-serif; font-size:14px; font-style:normal; font-weight:normal; line-height:17px; text-decoration:none;" target="_blank">Post udostępniony przez KS Kabel Kraków (@kskabel)</a></p></div></blockquote>
-<script async src="//www.instagram.com/embed.js"></script>
-          <!-- KONIEC EMBEDA -->
-        </div>
-        <span class="work-label">Fotografie sportowe</span>
-      </div>
-
-      <!-- === POZYCJA 2: Karuzela IG === -->
-      <div class="work-item">
-        <div class="work-embed">
-          <!-- WKLEJ EMBED Z INSTAGRAMA PONIŻEJ -->
-     <blockquote class="instagram-media" data-instgrm-permalink="https://www.instagram.com/p/DNGU7XYKEp5/?utm_source=ig_embed&amp;utm_campaign=loading" data-instgrm-version="14" style=" background:#FFF; border:0; border-radius:3px; box-shadow:0 0 1px 0 rgba(0,0,0,0.5),0 1px 10px 0 rgba(0,0,0,0.15); margin: 1px; max-width:540px; min-width:326px; padding:0; width:99.375%; width:-webkit-calc(100% - 2px); width:calc(100% - 2px);"><div style="padding:16px;"> <a href="https://www.instagram.com/p/DNGU7XYKEp5/?utm_source=ig_embed&amp;utm_campaign=loading" style=" background:#FFFFFF; line-height:0; padding:0 0; text-align:center; text-decoration:none; width:100%;" target="_blank"> <div style=" display: flex; flex-direction: row; align-items: center;"> <div style="background-color: #F4F4F4; border-radius: 50%; flex-grow: 0; height: 40px; margin-right: 14px; width: 40px;"></div> <div style="display: flex; flex-direction: column; flex-grow: 1; justify-content: center;"> <div style=" background-color: #F4F4F4; border-radius: 4px; flex-grow: 0; height: 14px; margin-bottom: 6px; width: 100px;"></div> <div style=" background-color: #F4F4F4; border-radius: 4px; flex-grow: 0; height: 14px; width: 60px;"></div></div></div><div style="padding: 19% 0;"></div> <div style="display:block; height:50px; margin:0 auto 12px; width:50px;"><svg width="50px" height="50px" viewBox="0 0 60 60" version="1.1" xmlns="https://www.w3.org/2000/svg" xmlns:xlink="https://www.w3.org/1999/xlink"><g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd"><g transform="translate(-511.000000, -20.000000)" fill="#000000"><g><path d="M556.869,30.41 C554.814,30.41 553.148,32.076 553.148,34.131 C553.148,36.186 554.814,37.852 556.869,37.852 C558.924,37.852 560.59,36.186 560.59,34.131 C560.59,32.076 558.924,30.41 556.869,30.41 M541,60.657 C535.114,60.657 530.342,55.887 530.342,50 C530.342,44.114 535.114,39.342 541,39.342 C546.887,39.342 551.658,44.114 551.658,50 C551.658,55.887 546.887,60.657 541,60.657 M541,33.886 C532.1,33.886 524.886,41.1 524.886,50 C524.886,58.899 532.1,66.113 541,66.113 C549.9,66.113 557.115,58.899 557.115,50 C557.115,41.1 549.9,33.886 541,33.886 M565.378,62.101 C565.244,65.022 564.756,66.606 564.346,67.663 C563.803,69.06 563.154,70.057 562.106,71.106 C561.058,72.155 560.06,72.803 558.662,73.347 C557.607,73.757 556.021,74.244 553.102,74.378 C549.944,74.521 548.997,74.552 541,74.552 C533.003,74.552 532.056,74.521 528.898,74.378 C525.979,74.244 524.393,73.757 523.338,73.347 C521.94,72.803 520.942,72.155 519.894,71.106 C518.846,70.057 518.197,69.06 517.654,67.663 C517.244,66.606 516.755,65.022 516.623,62.101 C516.479,58.943 516.448,57.996 516.448,50 C516.448,42.003 516.479,41.056 516.623,37.899 C516.755,34.978 517.244,33.391 517.654,32.338 C518.197,30.938 518.846,29.942 519.894,28.894 C520.942,27.846 521.94,27.196 523.338,26.654 C524.393,26.244 525.979,25.756 528.898,25.623 C532.057,25.479 533.004,25.448 541,25.448 C548.997,25.448 549.943,25.479 553.102,25.623 C556.021,25.756 557.607,26.244 558.662,26.654 C560.06,27.196 561.058,27.846 562.106,28.894 C563.154,29.942 563.803,30.938 564.346,32.338 C564.756,33.391 565.244,34.978 565.378,37.899 C565.522,41.056 565.552,42.003 565.552,50 C565.552,57.996 565.522,58.943 565.378,62.101 M570.82,37.631 C570.674,34.438 570.167,32.258 569.425,30.349 C568.659,28.377 567.633,26.702 565.965,25.035 C564.297,23.368 562.623,22.342 560.652,21.575 C558.743,20.834 556.562,20.326 553.369,20.18 C550.169,20.033 549.148,20 541,20 C532.853,20 531.831,20.033 528.631,20.18 C525.438,20.326 523.257,20.834 521.349,21.575 C519.376,22.342 517.703,23.368 516.035,25.035 C514.368,26.702 513.342,28.377 512.574,30.349 C511.834,32.258 511.326,34.438 511.181,37.631 C511.035,40.831 511,41.851 511,50 C511,58.147 511.035,59.17 511.181,62.369 C511.326,65.562 511.834,67.743 512.574,69.651 C513.342,71.625 514.368,73.296 516.035,74.965 C517.703,76.634 519.376,77.658 521.349,78.425 C523.257,79.167 525.438,79.673 528.631,79.82 C531.831,79.965 532.853,80.001 541,80.001 C549.148,80.001 550.169,79.965 553.369,79.82 C556.562,79.673 558.743,79.167 560.652,78.425 C562.623,77.658 564.297,76.634 565.965,74.965 C567.633,73.296 568.659,71.625 569.425,69.651 C570.167,67.743 570.674,65.562 570.82,62.369 C570.966,59.17 571,58.147 571,50 C571,41.851 570.966,40.831 570.82,37.631"></path></g></g></g></svg></div><div style="padding-top: 8px;"> <div style=" color:#3897f0; font-family:Arial,sans-serif; font-size:14px; font-style:normal; font-weight:550; line-height:18px;">Wyświetl ten post na Instagramie</div></div><div style="padding: 12.5% 0;"></div> <div style="display: flex; flex-direction: row; margin-bottom: 14px; align-items: center;"><div> <div style="background-color: #F4F4F4; border-radius: 50%; height: 12.5px; width: 12.5px; transform: translateX(0px) translateY(7px);"></div> <div style="background-color: #F4F4F4; height: 12.5px; transform: rotate(-45deg) translateX(3px) translateY(1px); width: 12.5px; flex-grow: 0; margin-right: 14px; margin-left: 2px;"></div> <div style="background-color: #F4F4F4; border-radius: 50%; height: 12.5px; width: 12.5px; transform: translateX(9px) translateY(-18px);"></div></div><div style="margin-left: 8px;"> <div style=" background-color: #F4F4F4; border-radius: 50%; flex-grow: 0; height: 20px; width: 20px;"></div> <div style=" width: 0; height: 0; border-top: 2px solid transparent; border-left: 6px solid #f4f4f4; border-bottom: 2px solid transparent; transform: translateX(16px) translateY(-4px) rotate(30deg)"></div></div><div style="margin-left: auto;"> <div style=" width: 0px; border-top: 8px solid #F4F4F4; border-right: 8px solid transparent; transform: translateY(16px);"></div> <div style=" background-color: #F4F4F4; flex-grow: 0; height: 12px; width: 16px; transform: translateY(-4px);"></div> <div style=" width: 0; height: 0; border-top: 8px solid #F4F4F4; border-left: 8px solid transparent; transform: translateY(-4px) translateX(8px);"></div></div></div> <div style="display: flex; flex-direction: column; flex-grow: 1; justify-content: center; margin-bottom: 24px;"> <div style=" background-color: #F4F4F4; border-radius: 4px; flex-grow: 0; height: 14px; margin-bottom: 6px; width: 224px;"></div> <div style=" background-color: #F4F4F4; border-radius: 4px; flex-grow: 0; height: 14px; width: 144px;"></div></div></a><p style=" color:#c9c8cd; font-family:Arial,sans-serif; font-size:14px; line-height:17px; margin-bottom:0; margin-top:8px; overflow:hidden; padding:8px 0 7px; text-align:center; text-overflow:ellipsis; white-space:nowrap;"><a href="https://www.instagram.com/p/DNGU7XYKEp5/?utm_source=ig_embed&amp;utm_campaign=loading" style=" color:#c9c8cd; font-family:Arial,sans-serif; font-size:14px; font-style:normal; font-weight:normal; line-height:17px; text-decoration:none;" target="_blank">Post udostępniony przez Akademia KS Kabel Kraków (@akademiakabel)</a></p></div></blockquote>
-<script async src="//www.instagram.com/embed.js"></script>
-          <!-- KONIEC EMBEDA -->
-        </div>
-        <span class="work-label">Fotografie sportowe</span>
-      </div>
-
-      <!-- === POZYCJA 3: Filmik FB (pełna szerokość) === -->
-      <div class="work-item full">
-        <div class="work-embed">
-          <!-- WKLEJ EMBED FILMIKU Z FACEBOOKA PONIŻEJ -->
-          <div class="work-embed-placeholder wide">
-            <span>🎬</span>
-            <span>Filmik Facebook</span>
+        <div class="work-item w-portrait-sm">
+          <div class="work-embed ar-45">
+            <!-- WKLEJ EMBED Z INSTAGRAMA PONIŻEJ -->
+            <div class="work-embed-placeholder">
+              <span>📱</span>
+              <span>Karuzela IG 4:5</span>
+            </div>
+            <!-- KONIEC EMBEDA -->
           </div>
-          <!-- KONIEC EMBEDA -->
+          <span class="work-label">Color hunting</span>
         </div>
-        <span class="work-label">Rolka sprawozdawcza</span>
-      </div>
 
-      <!-- === POZYCJA 4: Zdjęcie PNG === -->
-      <div class="work-item">
-        <div class="work-embed">
-          <!-- WKLEJ <img src="nazwa.jpg" alt="opis"> PONIŻEJ -->
-          <div class="work-embed-placeholder">
-            <span>🖼️</span>
-            <span>Grafika PNG</span>
+        <div class="work-item w-portrait-sm">
+          <div class="work-embed ar-45">
+            <!-- WKLEJ EMBED Z INSTAGRAMA PONIŻEJ -->
+            <div class="work-embed-placeholder">
+              <span>📱</span>
+              <span>Karuzela IG 4:5</span>
+            </div>
+            <!-- KONIEC EMBEDA -->
           </div>
-          <!-- KONIEC -->
+          <span class="work-label">Trening w obiektywie</span>
         </div>
-        <span class="work-label">Grafika promująca</span>
-      </div>
 
-      <!-- === POZYCJA 5: Karuzela IG === -->
-      <div class="work-item">
-        <div class="work-embed">
-          <!-- WKLEJ EMBED Z INSTAGRAMA PONIŻEJ -->
-          <div class="work-embed-placeholder">
-            <span>📱</span>
-            <span>Karuzela Instagram</span>
+        <div class="work-item w-portrait-sm">
+          <div class="work-embed ar-45">
+            <!-- WKLEJ EMBED Z INSTAGRAMA PONIŻEJ -->
+            <div class="work-embed-placeholder">
+              <span>📱</span>
+              <span>Karuzela IG 4:5</span>
+            </div>
+            <!-- KONIEC EMBEDA -->
           </div>
-          <!-- KONIEC EMBEDA -->
+          <span class="work-label">Prezentacja współpracy</span>
         </div>
-        <span class="work-label">Relacja z meczu</span>
-      </div>
 
-      <!-- === POZYCJA 6: Filmik FB (pełna szerokość) === -->
-      <div class="work-item full">
-        <div class="work-embed">
-          <!-- WKLEJ EMBED FILMIKU Z FACEBOOKA PONIŻEJ -->
-          <div class="work-embed-placeholder wide">
-            <span>🎬</span>
-            <span>Filmik Facebook</span>
-          </div>
-          <!-- KONIEC EMBEDA -->
-        </div>
-        <span class="work-label">Spot rekrutacyjny</span>
       </div>
-
-      <!-- === POZYCJA 7: Zdjęcie === -->
-      <div class="work-item">
-        <div class="work-embed">
-          <!-- WKLEJ <img src="nazwa.jpg" alt="opis"> PONIŻEJ -->
-          <div class="work-embed-placeholder">
-            <span>📷</span>
-            <span>Zdjęcie</span>
-          </div>
-          <!-- KONIEC -->
-        </div>
-        <span class="work-label">Fotografia sportowa</span>
-      </div>
-
-      <!-- === POZYCJA 8: Karuzela IG === -->
-      <div class="work-item">
-        <div class="work-embed">
-          <!-- WKLEJ EMBED Z INSTAGRAMA PONIŻEJ -->
-          <div class="work-embed-placeholder">
-            <span>📱</span>
-            <span>Karuzela Instagram</span>
-          </div>
-          <!-- KONIEC EMBEDA -->
-        </div>
-        <span class="work-label">Raport meczowy</span>
-      </div>
-
     </div>
+
+    <!-- PROJEKTY GRAFICZNE -->
+    <div class="subsection">
+      <h3 class="subsection-title">Projekty graficzne</h3>
+      <div class="work-row">
+
+        <div class="work-item w-portrait-sm">
+          <div class="work-embed ar-45">
+            <!-- WKLEJ <img src="nazwa.jpg" alt="opis"> PONIŻEJ -->
+            <div class="work-embed-placeholder">
+              <span>🖼️</span>
+              <span>Grafika 4:5</span>
+            </div>
+            <!-- KONIEC -->
+          </div>
+          <span class="work-label">Grafika specjalna</span>
+        </div>
+
+        <div class="work-item w-portrait-sm">
+          <div class="work-embed ar-45">
+            <!-- WKLEJ <img src="nazwa.jpg" alt="opis"> PONIŻEJ -->
+            <div class="work-embed-placeholder">
+              <span>🖼️</span>
+              <span>Grafika 4:5</span>
+            </div>
+            <!-- KONIEC -->
+          </div>
+          <span class="work-label">Wizualizacja danych</span>
+        </div>
+
+        <div class="work-item w-a6">
+          <div class="work-embed ar-a6">
+            <!-- WKLEJ <img src="nazwa.jpg" alt="opis"> PONIŻEJ -->
+            <div class="work-embed-placeholder">
+              <span>🖼️</span>
+              <span>Ulotka A6</span>
+            </div>
+            <!-- KONIEC -->
+          </div>
+          <span class="work-label">Projekt ulotki</span>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- TREŚCI EDUKACYJNE -->
+    <div class="subsection">
+      <h3 class="subsection-title">Treści edukacyjne</h3>
+      <div class="work-row">
+
+        <div class="work-item w-portrait-sm">
+          <div class="work-embed ar-45">
+            <!-- WKLEJ EMBED Z INSTAGRAMA PONIŻEJ -->
+            <div class="work-embed-placeholder">
+              <span>📱</span>
+              <span>Karuzela IG 4:5</span>
+            </div>
+            <!-- KONIEC EMBEDA -->
+          </div>
+        </div>
+
+        <div class="work-item w-flex">
+          <div class="work-embed ar-169">
+            <!-- WKLEJ EMBED FILMIKU PONIŻEJ -->
+            <div class="work-embed-placeholder">
+              <span>🎬</span>
+              <span>Rolka 16:9</span>
+            </div>
+            <!-- KONIEC EMBEDA -->
+          </div>
+        </div>
+
+        <div class="work-item w-portrait-sm">
+          <div class="work-embed ar-45">
+            <!-- WKLEJ EMBED Z INSTAGRAMA PONIŻEJ -->
+            <div class="work-embed-placeholder">
+              <span>📱</span>
+              <span>Karuzela IG 4:5</span>
+            </div>
+            <!-- KONIEC EMBEDA -->
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- DODATKOWA GRAFIKA -->
+    <div class="subsection">
+      <div class="work-row">
+        <div class="work-item w-portrait-sm">
+          <div class="work-embed ar-45">
+            <!-- WKLEJ <img src="nazwa.jpg" alt="opis"> PONIŻEJ -->
+            <div class="work-embed-placeholder">
+              <span>🖼️</span>
+              <span>Grafika 4:5</span>
+            </div>
+            <!-- KONIEC -->
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- TRENDY -->
+    <div class="subsection">
+      <h3 class="subsection-title">Trendy</h3>
+      <div class="work-row">
+
+        <div class="work-item w-portrait">
+          <div class="work-embed ar-916">
+            <!-- WKLEJ EMBED ROLKI PONIŻEJ -->
+            <div class="work-embed-placeholder">
+              <span>🎥</span>
+              <span>Rolka 9:16</span>
+            </div>
+            <!-- KONIEC EMBEDA -->
+          </div>
+        </div>
+
+        <div class="work-item w-portrait">
+          <div class="work-embed ar-916">
+            <!-- WKLEJ EMBED ROLKI PONIŻEJ -->
+            <div class="work-embed-placeholder">
+              <span>🎥</span>
+              <span>Rolka 9:16</span>
+            </div>
+            <!-- KONIEC EMBEDA -->
+          </div>
+        </div>
+
+        <div class="work-item w-portrait">
+          <div class="work-embed ar-916">
+            <!-- WKLEJ EMBED ROLKI PONIŻEJ -->
+            <div class="work-embed-placeholder">
+              <span>🎥</span>
+              <span>Rolka 9:16</span>
+            </div>
+            <!-- KONIEC EMBEDA -->
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- 2 ROLKI PIONOWE -->
+    <div class="subsection">
+      <div class="work-row">
+
+        <div class="work-item w-portrait">
+          <div class="work-embed ar-916">
+            <!-- WKLEJ EMBED ROLKI PONIŻEJ -->
+            <div class="work-embed-placeholder">
+              <span>🎥</span>
+              <span>Rolka 9:16</span>
+            </div>
+            <!-- KONIEC EMBEDA -->
+          </div>
+        </div>
+
+        <div class="work-item w-portrait">
+          <div class="work-embed ar-916">
+            <!-- WKLEJ EMBED ROLKI PONIŻEJ -->
+            <div class="work-embed-placeholder">
+              <span>🎥</span>
+              <span>Rolka 9:16</span>
+            </div>
+            <!-- KONIEC EMBEDA -->
+          </div>
+        </div>
+
+      </div>
+    </div>
+
   </section>
 
 
+  <!-- ABOUT -->
   <section id="about">
     <span class="section-label">O mnie</span>
     <div class="about-grid">
-      <p class="about-text">Content creator i social media manager z doświadczeniem w piłce nożnej młodzieżowej. Fotografuję mecze, montuję rolki, projektuję grafiki i prowadzę social media — od koncepcji po publikację.</p>
+      <div>
+        <p class="about-text">Systematyczność, dbałość o szczegóły i reakcja „on time" — to dla mnie najważniejsze i tak prowadzę profile w mediach społecznościowych. Idą za tym mierzalne wyniki: 5 mln wyświetleń, 400 tys. zasięgu, 50 tys. aktywności wyłącznie organicznie w rok na Facebooku i Instagramie małego, lokalnego klubu.</p>
+        <p class="about-text">Poza prowadzeniem mediów — od planowania po publikację — jestem wszechstronny i potrafię prowadzić kilka projektów równocześnie. Zajmuję się ponadto organizacją eventów — 10 dni meczowych na moim koncie. Nie jest mi obce też komunikowanie się z klientem, usługodawcą oraz partnerami i sponsorami — to z nimi nawiązuję kontakty, umowy i dbam o przebieg współpracy.</p>
+      </div>
       <div class="about-details">
         <div class="about-row">
-          <div class="about-row-label">Rola</div>
-          <div class="about-row-value">Content Creator & Social Media Manager<br>KS Kabel Kraków</div>
-        </div>
-        <div class="about-row">
-          <div class="about-row-label">Narzędzia</div>
-          <div class="skills-list">
-            <span class="skill-tag">Final Cut Pro</span>
-            <span class="skill-tag">Lightroom</span>
-            <span class="skill-tag">Pixelmator Pro</span>
-            <span class="skill-tag">Meta Business Suite</span>
-            <span class="skill-tag">DaVinci Resolve</span>
+          <div class="about-row-label">Role</div>
+          <div class="tag-list">
+            <span class="skill-tag">Social Media Manager</span>
+            <span class="skill-tag">Content Creator</span>
+            <span class="skill-tag">Administrator</span>
+            <span class="skill-tag">Event Manager</span>
+            <span class="skill-tag">Sponsorship Manager</span>
           </div>
         </div>
         <div class="about-row">
-          <div class="about-row-label">Zakres</div>
-          <div class="about-row-value">Fotografia sportowa · montaż wideo · grafika · social media · kampanie rekrutacyjne</div>
-        </div>
-        <div class="about-row">
-          <div class="about-row-label">Lokalizacja</div>
-          <div class="about-row-value">Kraków</div>
+          <div class="about-row-label">Narzędzia</div>
+          <div class="tag-list">
+            <span class="skill-tag">Lightroom</span>
+            <span class="skill-tag">Canva</span>
+            <span class="skill-tag">Final Cut Pro</span>
+            <span class="skill-tag">CapCut</span>
+            <span class="skill-tag">Meta Business Suite</span>
+            <span class="skill-tag">DaVinci Resolve</span>
+            <span class="skill-tag">Pakiet Google</span>
+          </div>
         </div>
       </div>
     </div>
   </section>
 
 
+  <!-- CONTACT -->
   <section id="contact" class="contact-section">
-    <span class="section-label">Kontakt</span>
+    <h2 class="contact-title">Kontakt</h2>
     <div class="contact-grid">
-      <div class="contact-item">
-        <span class="contact-item-label">E-mail</span>
-        <a href="mailto:twoj@email.pl" class="contact-item-value">twoj@email.pl</a>
-      </div>
-      <div class="contact-item">
+      <div>
         <span class="contact-item-label">Telefon</span>
-        <a href="tel:+48123456789" class="contact-item-value">+48 123 456 789</a>
+        <a href="tel:+48665275114" class="contact-item-value">665 275 114</a>
+      </div>
+      <div>
+        <span class="contact-item-label">E-mail</span>
+        <a href="mailto:sleczka.tymoteusz@gmail.com" class="contact-item-value">sleczka.tymoteusz@gmail.com</a>
       </div>
     </div>
   </section>
 
 
+  <!-- FOOTER -->
   <footer>
     <span class="footer-copy">© 2026 Tymoteusz Ślęczka</span>
     <a href="#" class="footer-back">↑ Góra</a>
@@ -547,7 +671,7 @@
     const observer = new IntersectionObserver((entries) => {
       entries.forEach((entry, i) => {
         if (entry.isIntersecting) {
-          setTimeout(() => entry.target.classList.add('visible'), i * 60);
+          setTimeout(() => entry.target.classList.add('visible'), i * 50);
           observer.unobserve(entry.target);
         }
       });
